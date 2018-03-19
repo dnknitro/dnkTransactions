@@ -1,0 +1,54 @@
+﻿<Window x:Class="dnkTransactionsUI.MainWindow"
+		x:Name="currentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dnkTransactionsUI"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:themes="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        mc:Ignorable="d"
+        Title="dnk Transactions" Height="969.916" Width="903.214">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<dxg:GridControl Grid.Row="0" Name="TransactionsGrid" AutoPopulateColumns="False" ItemsSource="{Binding TransactionsSource, ElementName=currentWindow}" >
+			<dxg:GridControl.Columns>
+				<dxg:GridColumn x:Name="Year"              FieldName="Year"            Width="40" AllowResizing="False" />
+				<dxg:GridColumn x:Name="Month"             FieldName="Month"           Width="40" AllowResizing="False" />
+				<dxg:GridColumn x:Name="DateColumn"        FieldName="Date"            Width="80" />
+				<dxg:GridColumn x:Name="DescriptionColumn" FieldName="Description"     Width="300" />
+				<dxg:GridColumn x:Name="OriginalDescriptionColumn" FieldName="OriginalDescription"     Width="50" />
+				<dxg:GridColumn x:Name="AmountColumn"      FieldName="Amount"          Width="100" />
+				<dxg:GridColumn x:Name="TypeColumn"        FieldName="Type"            Width="60" />
+				<dxg:GridColumn x:Name="AccountNameColumn" FieldName="AccountName"     Width="200" />
+				<dxg:GridColumn x:Name="CategoryColumn"    FieldName="Category"        Width="200" />
+				<dxg:GridColumn x:Name="LabelsColumn"      FieldName="Labels"          Width="100" />
+				<dxg:GridColumn x:Name="TurnaroundGroup"   FieldName="TurnaroundGroup" Width="50" />
+				<dxg:GridColumn x:Name="AmountMod"         FieldName="AmountMod"       Width="100" />
+			</dxg:GridControl.Columns>
+			<dxg:GridControl.View>
+				<dxg:TableView Name="TransactionsGridTableView" ShowTotalSummary="True" AllowEditing="False" ShowGroupPanel="True" MultiSelectMode="Cell" ClipboardCopyWithHeaders="False" >
+					<dxg:TableView.RowCellMenuCustomizations>
+						<dxb:BarButtonItem Name="IncludeByValueCellMenuItem" Content="Include by value" ItemClick="IncludeByValueCellMenuItem_Click"/>
+						<dxb:BarButtonItem Name="ExcludeByValueCellMenuItem" Content="Exclude by value" ItemClick="ExcludeByValueCellMenuItem_Click" />
+					</dxg:TableView.RowCellMenuCustomizations>
+					<dxg:TableView.RowStyle>
+						<Style TargetType="{x:Type dxg:GridRowContent}" BasedOn="{StaticResource {themes:GridRowThemeKey ResourceKey=RowStyle}}">
+							<Setter Property="Background" Value="{Binding Row.RowBgColor}"/>
+						</Style>
+					</dxg:TableView.RowStyle>
+				</dxg:TableView>
+			</dxg:GridControl.View>
+			<dxg:GridControl.TotalSummary>
+				<dxg:GridSummaryItem FieldName="AccountName" SummaryType="Count" />
+				<dxg:GridSummaryItem FieldName="Amount" SummaryType="Sum" DisplayFormat="{}{0:c2}" />
+			</dxg:GridControl.TotalSummary>
+		</dxg:GridControl>
+	</Grid>
+</Window>
+
